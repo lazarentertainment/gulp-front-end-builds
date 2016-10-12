@@ -1,0 +1,32 @@
+{
+  "name": "gulp-front-end-builds",
+  "version": "0.0.1",
+  "description": "gulp plugin for https://github.com/tedconf/front_end_builds",
+  "license": "MIT",
+  "repository": "leeh/gulp-front-end-builds",
+  "author": {
+    "name": "Lee Horrocks",
+    "email": "lee@leehorrocks.com"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "scripts": {
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+    "core-object": "^2.0.5",
+    "gulp-util": "^3.0.7",
+    "passwd-user": "^2.1.0",
+    "request": "^2.69.0",
+    "underscore": "^1.8.3",
+    "through2": "^2.0.1"
+  }
+}
