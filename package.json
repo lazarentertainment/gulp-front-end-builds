@@ -20,6 +20,15 @@
     "gulpplugin"
   ],
   "devDependencies": {
+    "chai": "*",
+    "concurrent-transform": "^1.0.0",
+    "coveralls": "*",
+    "event-stream": "^3.2.1",
+    "gulp": "^3.9.0",
+    "gulp-rename": "*",
+    "istanbul": "*",
+    "mocha": "*",
+    "mocha-lcov-reporter": "*"
   },
   "dependencies": {
     "core-object": "^2.0.5",
