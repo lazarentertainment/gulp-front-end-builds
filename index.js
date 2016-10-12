@@ -4,10 +4,11 @@ const PLUGIN_NAME = "gulp-front-end-builds";
 var CoreObject 	= require('core-object');
 var fs 						= require('fs');
 var crypto 				= require('crypto');
-var execSync 			= require('child_process').execSync;
-var _ 						= require('underscore');
 var request 			= require('request');
 var util					= require('gulp-util')
+var passwdUser 		= require('passwd-user');
+
+var execSync 			= require('child_process').execSync;
 const pluginError = require("gulp-util").PluginError;
 const post 				= require("request").post;
 const obj 				= require("through2").obj;
@@ -25,21 +26,34 @@ function gitInfo() {
 
 module.exports._gitInfo = gitInfo;
 
-function sign(index) {
-  var algo = 'RSA-SHA256',
-    keyFile = this.readConfig('privateKey');
+function sign(index, privateKey) {
+  var algo = 'RSA-SHA256'
 
   return crypto
     .createSign(algo)
     .update(index)
-    .sign(fs.readFileSync(keyFile), 'base64');
+    .sign(fs.readFileSync(privateKey), 'base64');
 }
 
-module.exports = (endpoint, app, options) => {
-  let option = options || {};
-  if (!host || typeof(host) !== "string") {
-    throw new pluginError(PLUGIN_NAME, 'Invalid host format.');
+module.exports = (options) => {
+  let option = options || {
+  	endpoint: "http://127.0.0.1:3000"
+  };
+
+  if (!options.privateKey) {
+	  var homedir = passwdUser.sync(process.getuid()).homedir;
+    options.privateKey = homedir + '/.ssh/id_rsa';
   }
+
+  if (!options.app) {
+    throw new PluginError(PLUGIN_NAME, 'Could not find app to use.');
+  }
+
+  if (!options.endpoint || typeof(options.endpoint) !== "string") {
+    throw new pluginError(PLUGIN_NAME, 'Invalid endpoint.');
+  }
+
+  var cb = options.callback || function(){};
 
   return obj((file, enc, cb) => {
     if (!file) {
@@ -47,15 +61,15 @@ module.exports = (endpoint, app, options) => {
     }
     if (file.isBuffer()) {
 
-    	var git = this.gitInfo();
-    	var content = file.contents.toString(opt.encoding || null);
-      var signature = this.sign(content);
+    	var git = gitInfo();
+    	var content = file.contents.toString(options.encoding || null);
+      var signature = sign(content, options.privateKey);
 
-      var url = endpoint.match(/\/front_end_builds\/builds$/) ?
-	      endpoint : endpoint + '/front_end_builds/builds';
+      var url = options.endpoint.match(/\/front_end_builds\/builds$/) ?
+	     options.endpoint : options.endpoint + '/front_end_builds/builds';
 
 			var data = {
-				app_name: app,
+				app_name: options.app,
         branch: git.branch,
         sha: git.sha,
         signature: signature,
@@ -65,11 +79,7 @@ module.exports = (endpoint, app, options) => {
 
       post({
         url: url,
-        form: (opt => {
-          opt.content = content
-          opt.relative = file.relative;
-          return opt;
-        })(option)
+        form: data
       }, (err, response, body) => {
         option.callback && option.callback(err, body);
         if (err) {

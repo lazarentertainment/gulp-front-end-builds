@@ -1,17 +1,27 @@
 {
   "name": "gulp-front-end-builds",
   "version": "0.0.1",
-  "description": "gulp plugin for https://github.com/tedconf/front_end_builds",
+  "description": "Gulp plugin for https://github.com/tedconf/front_end_builds",
   "license": "MIT",
-  "repository": "leeh/gulp-front-end-builds",
+  "repository": {
+     "type": "git",
+     "url": "git://github.com/leeh/gulp-front-end-builds"
+  },
   "author": {
     "name": "Lee Horrocks",
-    "email": "lee@leehorrocks.com"
+    "email": "lee@leehorrocks.com",
+    "url": "git://github.com/leeh"
   },
   "engines": {
     "node": ">=4.0.0"
   },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
   "scripts": {
+    "test": "istanbul test _mocha --report html -- tests/*.js --reporter spec",
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "files": [
     "index.js"
@@ -23,12 +33,14 @@
     "chai": "*",
     "concurrent-transform": "^1.0.0",
     "coveralls": "*",
+    "express": "^4.12.4",
     "event-stream": "^3.2.1",
     "gulp": "^3.9.0",
     "gulp-rename": "*",
     "istanbul": "*",
     "mocha": "*",
-    "mocha-lcov-reporter": "*"
+    "mocha-lcov-reporter": "*",
+    "skipper": "^0.5.5"
   },
   "dependencies": {
     "core-object": "^2.0.5",

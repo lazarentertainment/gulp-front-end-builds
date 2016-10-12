@@ -18,7 +18,7 @@ const frontEnd = require('gulp-front-end-builds');
 
 gulp.task('deploy', () => {
 	gulp.src('dist/index.html')
-		.pipe(frontEnd("http//www.example.com", "application"))
+		.pipe(frontEnd({endpoint: "http://www.example.com", app: "application"}))
 );
 ```
 
