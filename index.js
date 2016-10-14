@@ -46,17 +46,21 @@ module.exports = (options) => {
   }
 
   if (!options.app) {
+  	util.log(util.colors.red('Could not find app to use.'));
     throw new PluginError(PLUGIN_NAME, 'Could not find app to use.');
   }
 
   if (!options.endpoint || typeof(options.endpoint) !== "string") {
+  	util.log(util.colors.red('Invalid endpoint.'));
     throw new pluginError(PLUGIN_NAME, 'Invalid endpoint.');
   }
 
   var cb = options.callback || function(){};
 
   return obj((file, enc, cb) => {
+  	util.log(util.colors.cyan('Deploying to front end builds server.'));
     if (!file) {
+    	util.log(util.colors.red('Missing source file or files.'));
       throw new pluginError(PLUGIN_NAME, 'Missing file or files.');
     }
     if (file.isBuffer()) {
