@@ -16,10 +16,10 @@ const gulp = require('gulp');
 const frontEnd = require('gulp-front-end-builds');
 
 
-gulp.task('deploy', () => {
+gulp.task('deploy', function() {
 	gulp.src('dist/index.html')
-		.pipe(frontEnd({endpoint: "http://www.example.com", app: "application"}))
-);
+		.pipe(frontEnd({endpoint: "http://www.example.com", app: "application"}));
+});
 ```
 
 
@@ -29,10 +29,17 @@ gulp.task('deploy', () => {
 
 #### options
 
-##### foo
+##### endpoint
 
-Type: `boolean`<br>
-Default: `false`
+Type: `string`<br>
+Default: null
 
-Lorem ipsum.
+URL of the FrontEndBuilds server
+
+##### app
+
+Type: `string`<br>
+Default: null
+
+FrontEndBuilds app to target
 
