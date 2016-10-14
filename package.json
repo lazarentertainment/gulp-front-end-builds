@@ -1,6 +1,6 @@
 {
   "name": "gulp-front-end-builds",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Gulp plugin for https://github.com/tedconf/front_end_builds",
   "license": "MIT",
   "repository": {
