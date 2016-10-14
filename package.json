@@ -5,12 +5,12 @@
   "license": "MIT",
   "repository": {
      "type": "git",
-     "url": "git://github.com/leeh/gulp-front-end-builds"
+     "url": "git://github.com/lazarentertainment/gulp-front-end-builds"
   },
   "author": {
     "name": "Lee Horrocks",
-    "email": "lee@leehorrocks.com",
-    "url": "git://github.com/leeh"
+    "email": "lee@stageten.tv",
+    "url": "http://stageten.tv"
   },
   "engines": {
     "node": ">=4.0.0"
